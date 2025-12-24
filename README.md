@@ -20,11 +20,13 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 ## 🚀 How to Use
 
 1.  **Run:** Launch the `raid.exe` .
-2.  **Enter Raid:** Join any Jogo Raid (any difficulty).
-3.  **Controls:**
+2.  * <img width="126" height="130" alt="image" src="https://github.com/user-attachments/assets/c0f1f88b-5ecf-4222-804a-e29ed18de560" />
+3.  **Enter Raid:** Join any Jogo Raid (any difficulty).
+4.  **Controls:**
     * Press **`F1`** to **Start** the automation.
     * Press **`F2`** to **Stop** and exit the program completely.
-    * "C:\Users\Joe\Videos\Captures\Roblox 2025-12-24 16-48-41.mp4"
+   
+
 
 ---
 
