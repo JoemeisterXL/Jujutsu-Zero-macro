@@ -1,4 +1,5 @@
 Auto raid - jujutsu zero - Roblox
+
 jujutsu zero macro
 
 Execute the raid.ahk 
