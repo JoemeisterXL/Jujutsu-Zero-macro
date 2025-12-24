@@ -36,6 +36,12 @@ Since the macro relies on a **One-Tap** kill, focus on these stats to ensure it 
     * [View Dragon Bone Info on Trello](https://trello.com/c/Henxfu9C/45-dragon-bone)
     * My build
     * <img width="378" height="237" alt="image" src="https://github.com/user-attachments/assets/3baf7b0c-c6d6-4450-bc6c-885a05bba8d0" />
+    
+    * My Skill tree
+    * <img width="727" height="649" alt="image" src="https://github.com/user-attachments/assets/f09f04b2-9a46-4e5f-af56-5dcf20acdcb9" />
+
+
+  
 
 
 ---
