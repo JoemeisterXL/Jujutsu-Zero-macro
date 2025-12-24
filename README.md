@@ -38,8 +38,8 @@ Since the macro relies on a **One-Tap** kill, focus on these stats to ensure it 
     * <img width="378" height="237" alt="image" src="https://github.com/user-attachments/assets/3baf7b0c-c6d6-4450-bc6c-885a05bba8d0" />
     
     * My Skill tree
-    * <img width="727" height="649" alt="image" src="https://github.com/user-attachments/assets/f09f04b2-9a46-4e5f-af56-5dcf20acdcb9" />
-    <img width="729" height="627" alt="image" src="https://github.com/user-attachments/assets/0b24f7e9-5bf2-4657-986f-6542badb020f" />
+    * <img width="363" height="324" alt="image" src="https://github.com/user-attachments/assets/f09f04b2-9a46-4e5f-af56-5dcf20acdcb9" />
+    * <img width="364" height="313" alt="image" src="https://github.com/user-attachments/assets/0b24f7e9-5bf2-4657-986f-6542badb020f" />
 
 
 
