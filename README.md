@@ -24,6 +24,7 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 3.  **Controls:**
     * Press **`F1`** to **Start** the automation.
     * Press **`F2`** to **Stop** and exit the program completely.
+    * "C:\Users\Joe\Videos\Captures\Roblox 2025-12-24 16-48-41.mp4"
 
 ---
 
