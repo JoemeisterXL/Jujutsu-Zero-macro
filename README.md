@@ -12,9 +12,8 @@ Also you need to one tap the Boss else it wont work
 Tipp:
 Go fully in offense and in Sorcery for the Crit Damage
 To increase the Crit Chance try to get the Dragon bone
-<img width="505" height="790" alt="image" src="https://github.com/user-attachments/assets/4fe0fe78-0bfb-4b15-9dce-3fd85082c489" />
+https://trello.com/c/Henxfu9C/45-dragon-bone
 
 Go to this NPC and craft the weapon (You get the fragments from the Jogo Boss)
 
-<img width="280" height="311" alt="image" src="https://github.com/user-attachments/assets/a4678e84-b150-4ae7-9c29-6c36ed2aaf09" />
 
