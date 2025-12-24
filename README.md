@@ -34,7 +34,8 @@ Since the macro relies on a **One-Tap** kill, focus on these stats to ensure it 
 * **Stats:** Max out **Offense** and **Sorcery** to boost your **Crit Damage**.
 * **Gear:** Obtain the **Dragon Bone** to significantly increase your **Crit Chance**.
     * [View Dragon Bone Info on Trello](https://trello.com/c/Henxfu9C/45-dragon-bone)
-    * My build <img width="378" height="237" alt="image" src="https://github.com/user-attachments/assets/3baf7b0c-c6d6-4450-bc6c-885a05bba8d0" />
+    * My build
+    * <img width="378" height="237" alt="image" src="https://github.com/user-attachments/assets/3baf7b0c-c6d6-4450-bc6c-885a05bba8d0" />
 
 
 ---
