@@ -1,4 +1,4 @@
-# 👹 Jujutsu Zero: Auto-Raid Macro
+# Jujutsu Zero: Auto-Raid Macro
 
 An efficient standalone macro tool for the **Jogo Raid** in Jujutsu Zero (Roblox). This tool automates the "One-Tap" farming process to maximize your efficiency across all raid tiers.
 
@@ -19,7 +19,7 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 
 ## 🚀 How to Use
 
-1.  **Run:** Launch the `raid.exe` (no installation required).
+1.  **Run:** Launch the `raid.exe` .
 2.  **Enter Raid:** Join any Jogo Raid (any difficulty).
 3.  **Controls:**
     * Press **`F1`** to **Start** the automation.
