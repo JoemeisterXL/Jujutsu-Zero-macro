@@ -47,10 +47,10 @@ F1::
         Click
         Sleep, 500
         Click
-        Sleep, 1500
+        Sleep, 2000
         ; search the image.png (Retry button)
         ImageGefunden := false 
-        Loop, 3 
+        Loop, 4 
         {
             ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 image.png
             if (ErrorLevel = 0) 
@@ -66,6 +66,14 @@ F1::
                 break ; Search 3 times for the image after that waiting for the new run
             }
             Sleep, 1000 
+        }
+
+        MouseMove, 800, 100
+        Sleep, 100
+        Loop, 3 
+        {
+            Click
+            Sleep, 200 ; waiting for short time
         }
 
         ToolTip, Run finished, waiting for next round
