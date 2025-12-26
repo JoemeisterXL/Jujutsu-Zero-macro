@@ -26,7 +26,7 @@ F1::
 
         {
 
-            ImageSearch, StartX, StartY, 0, 0, A_ScreenWidth, A_ScreenHeight, *80 start.png
+            ImageSearch, StartX, StartY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 start.png
 
             if (ErrorLevel = 0)
 
