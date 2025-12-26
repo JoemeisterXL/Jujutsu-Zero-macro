@@ -19,7 +19,7 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 
 ## 🚀 How to Use
 
-1.  **Run:** Launch the `raid-...x....exe` .
+1.  **Run:** Launch the `raid.exe` .
 2.  * <img width="126" height="130" alt="image" src="https://github.com/user-attachments/assets/c0f1f88b-5ecf-4222-804a-e29ed18de560" />
 3.  **Enter Raid:** Join any Jogo Raid (any difficulty).
 4.  **Controls:**
@@ -59,4 +59,5 @@ Since the macro relies on a **One-Tap** kill, focus on these stats to ensure it 
 ---
 
 ### 🛠️ Need help or found a bug?
-If the macro timing doesn't fit your loading speed, or if you have suggestions for other raids, feel free to **open an issue** here on GitHub!
+If the macro timing doesn't fit your loading speed, or if you have suggestions for other raids, feel free to **open an issue** here on GitHub or Join my discord server there you will get more help https://discord.gg/GaaU8ZNuvr
+if you want more ratio also just join my discord then I will add it
