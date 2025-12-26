@@ -114,7 +114,7 @@ F1::
             }
 
             if (ImageGefunden)
-                break
+                breakS
 
             Sleep, 1000 ; Warten bis zum nächsten Versuch, falls kein Bild gefunden wurde
         }

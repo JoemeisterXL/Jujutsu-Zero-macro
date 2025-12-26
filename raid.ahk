@@ -87,7 +87,7 @@ F1::
         ; search the image.png (Retry button)
         ToolTip, searching for retry button
             ; Definition der Bilder am Anfang des Skripts oder hier
-        bilderListe := ["image1920x1080.png", "image1366x768.png", "image1760x990.png"] 
+        bilderListe := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png"] 
         ImageGefunden := false
 
         ; Versuche es insgesamt 4 Mal
