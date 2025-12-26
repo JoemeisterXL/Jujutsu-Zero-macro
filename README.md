@@ -19,7 +19,7 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 
 ## 🚀 How to Use
 
-1.  **Run:** Launch the `raid-...x....exe` .
+1.  **Run:** Launch the `raid.exe` .
 2.  * <img width="126" height="130" alt="image" src="https://github.com/user-attachments/assets/c0f1f88b-5ecf-4222-804a-e29ed18de560" />
 3.  **Enter Raid:** Join any Jogo Raid (any difficulty).
 4.  **Controls:**
