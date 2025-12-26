@@ -60,3 +60,4 @@ Since the macro relies on a **One-Tap** kill, focus on these stats to ensure it 
 
 ### 🛠️ Need help or found a bug?
 If the macro timing doesn't fit your loading speed, or if you have suggestions for other raids, feel free to **open an issue** here on GitHub or Join my discord server there you will get more help https://discord.gg/GaaU8ZNuvr
+if you want more ratio also just join my discord then I will add it
