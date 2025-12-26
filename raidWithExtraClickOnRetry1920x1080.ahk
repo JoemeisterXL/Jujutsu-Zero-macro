@@ -118,6 +118,15 @@ F1::
 
             Sleep, 1000 ; Warten bis zum nächsten Versuch, falls kein Bild gefunden wurde
         }
+
+        MouseMove, 800, 100
+        Sleep, 100
+        Loop, 3 
+        {
+            Click
+            Sleep, 200 ; waiting for short time
+        }
+
         ToolTip, Run finished (Failed if its not on retry)
 
         Sleep, 9000
