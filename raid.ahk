@@ -4,8 +4,8 @@ SetWorkingDir %A_ScriptDir%
 CoordMode, Mouse, Screen 
 CoordMode, Pixel, Screen 
 
-RefBreite := 3840
-RefHoehe := 2160
+RefBreite := 2560
+RefHoehe := 1600
 
 ; Event - Counter the mouse movement better
 SendMode Event 
