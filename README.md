@@ -4,7 +4,7 @@ An efficient standalone macro tool for the **Jogo Raid** in Jujutsu Zero (Roblox
 
 ---
 
-**Notes**
+**Notes:**
 
 **Since update one is out the macro will only work with easy mode!!!**
 
