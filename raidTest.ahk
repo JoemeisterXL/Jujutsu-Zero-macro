@@ -1,105 +1,89 @@
-﻿;Settings
-
+;Settings
 #NoEnv
-
 SetWorkingDir %A_ScriptDir%
-
 CoordMode, Mouse, Screen
-
 CoordMode, Pixel, Screen
 
-;Event - Counter the mouse movement better
-
+;Event - Wichtig für Spiele
 SendMode Event
-
-SetDefaultMouseSpeed, 5
+SetDefaultMouseSpeed, 0 ; Auf 0 setzen für sofortige Reaktion in der Schleife
 
 F1::
-
-    Loop ; runs until user stops with F2
-
+    Loop ; Läuft bis F2 gedrückt wird
     {
         ToolTip, Run started
-        ; search raid start screen to start the programm
-
         Loop
-
         {
-
             ImageSearch, StartX, StartY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 start.png
-
             if (ErrorLevel = 0)
-
-            break ; Search is finished
-
+                break 
             Sleep, 2000
-
         }
+
         ToolTip, Found first image
-        ; Zoomes out
 
+        ; --- VERBESSERTE KAMERA-DREHUNG ---
+        ; 1. Maus in die Bildschirmmitte bewegen (verhindert Hängenbleiben am Rand)
+        MouseMove, A_ScreenWidth/2, A_ScreenHeight/2, 0
+        Sleep, 100
+
+        ; 2. Rechte Maustaste drücken
+        Click, Right, Down
+        Sleep, 100
+
+        ; 3. In kleinen Schritten exakt nach links bewegen (Loop für Stabilität)
+        ; Ändere "40" für die Weite der Drehung
+        ; Ersetzt Loop 2 mit -2.9/3
+        MouseMove, -5, 0, 0, R
+
+        Sleep, 100
+        Click, Right, Up ; Loslassen
+
+        ; 4. Kurz Strg an und aus
+        Send, {Control}
+        Sleep, 100
+        Send, {Control}
+        ; --- DREHUNG ENDE ---
+
+        Sleep, 400
         Send, {WheelDown 5}
-
         Sleep, 400
-
         Send, 1
-
         Sleep, 400
 
-        ; Move the mouse to the right position and klick one time
-
+        ; Klick auf Position 12, 474
         MouseMove, 12, 474
-
         Sleep, 200
-
         Click, Down
-
         Sleep, 50
-
         Click, Up
-
         Sleep, 500
 
-        ; Click the button to use the attack in raid
-
+        ; Angriff (Taste C)
         Sleep, 500
-
         Send, {c Down}
-
         Sleep, 50
-
         Send, {c Up}
-
         Sleep, 9000
 
-        ; Click to skip rewards fast
-
+        ; Rewards überspringen
         Sleep, 500
-
         Click
-
         Sleep, 500
-
         Click
-
         Sleep, 2000
 
-        ; search the image.png (Retry button)
+        ; Retry Button suchen
         ToolTip, searching for retry button
-            ; Definition der Bilder am Anfang des Skripts oder hier
-        bilderListe := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png"] 
+            bilderListe := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png"] 
         ImageGefunden := false
 
-        ; Versuche es insgesamt 4 Mal
         Loop, 4 
         {
             ToolTip, Search round %A_Index% of 4
-
-            ; Gehe jedes Bild in der Liste durch
             for index, dateiName in bilderListe 
             {
                 ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *60 %dateiName%
-
                 if (ErrorLevel = 0)
                 {
                     MouseMove, %FoundX%, %FoundY%
@@ -109,24 +93,17 @@ F1::
                         Sleep, 100
                     }
                     ImageGefunden := true
-                    break 2 ; Bricht SOWOHL die 'for'-Schleife ALS AUCH die 'Loop 4' ab
+                    break 2 
                 }
             }
-
             if (ImageGefunden)
                 break
-
-            Sleep, 1000 ; Warten bis zum nächsten Versuch, falls kein Bild gefunden wurde
+            Sleep, 1000 
         }
-        ToolTip, Run finished (Failed if its not on retry)
-
+        ToolTip, Run finished
         Sleep, 9000
-
         ToolTip
-
     }
-
 return
 
 F2::ExitApp
-
