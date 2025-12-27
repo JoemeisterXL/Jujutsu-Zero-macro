@@ -14,6 +14,7 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 * **Slot:** The character **MUST** be placed in the **1st slot**.
 * **Power:** If the boss survives the first hit, the macro loop will break.
 * **Display:** Use **Full Screen** mode for the best results.
+* **Pov** Use **80 pov** otherwise you wont hit the boss!(You can change this ingame)
 
 ---
 
