@@ -124,7 +124,7 @@ F1::
             Send, {Control}
             Sleep, 500
             Send, {Control}
-            Sleep, 6000
+            Sleep, 2000
 
             ; Click bottom left corner
             Send, 1
@@ -140,8 +140,16 @@ F1::
         Send, {c Up}
         Sleep, 9000
 
+        Send, 2
+
+        Sleep, 500
+        Send, {c Down}
+        Sleep, 50
+        Send, {c Up}
+        Sleep, 9000
+
         ; Skip rewards - REALISTIC
-        MouseMove, 10, A_ScreenHeight - 10, 5
+        MouseMove, 10, A_ScreenHeight 15, 5
         Sleep, 100
         Click
         Sleep, 500
