@@ -1,4 +1,4 @@
-;===========================================
+﻿;===========================================
 ; CONFIGURATION
 ;===========================================
 #NoEnv
@@ -22,8 +22,7 @@ Gui, Add, Text, x20 y15 w300 Center, === RAID MACRO CONTROLLER ===
 
 Gui, Add, GroupBox, x20 y50 w300 h120, Method Selection
 
-Gui, Add, Radio, x40 y75 w260 vMethod1 gMethodSwitch Checked, Method 1: No Rotation (Fuga + Meteor Support)
-Gui, Add, Radio, x40 y105 w260 vMethod2 gMethodSwitch, Method 2: Rotation Only (Hollow Purple + Fuga Support)
+Gui, Add, Radio, x40 y75 w260 vMethod1 gMethodSwitch Checked, Method 1: (Fuga + Meteor + Hollow purple )
 
 Gui, Add, Text, x40 y140 w260 cYellow, Active Method: 1
 
@@ -45,18 +44,10 @@ return
 ;===========================================
 MethodSwitch:
     Gui, Submit, NoHide
-    if (Method1)
-    {
-        ActiveMethod := 1
-        GuiControl,, StatusText, Method 1 activated (No Rotation)
-        GuiControl, Text, Text6, Active Method: 1
-    }
-    else if (Method2)
-    {
-        ActiveMethod := 2
-        GuiControl,, StatusText, Method 2 activated (Rotation Only)
-        GuiControl, Text, Text6, Active Method: 2
-    }
+    ActiveMethod := 1
+    GuiControl,, StatusText, Method 1 activated (No Rotation)
+    GuiControl, Text, Text6, Active Method: 1
+
 return
 
 ;===========================================
@@ -79,56 +70,25 @@ F1::
         ToolTip, Found first image - Method %ActiveMethod%
         GuiControl,, StatusText, Image found - Executing Method %ActiveMethod%
 
-        ; === METHOD LOGIC ===
-        if (ActiveMethod = 1)
-        {
-            ; METHOD 1: No Rotation - Fuga + Meteor Support
-            ; Move mouse to screen center - REALISTIC
-            MouseMove, A_ScreenWidth/2, A_ScreenHeight/2, 3
-            Sleep, 100
+        ; METHOD 1: No Rotation - Fuga + Meteor Support
+        ; Move mouse to screen center - REALISTIC
+        MouseMove, A_ScreenWidth/2, A_ScreenHeight/2, 3
+        Sleep, 100
 
-            ; Zoom and Skill
-            Sleep, 400
-            Send, {WheelDown 5}
-            Sleep, 400
-            Send, 1
-            Sleep, 400
+        ; Zoom and Skill
+        Sleep, 400
+        Send, {WheelDown 5}
+        Sleep, 400
+        Send, 1
+        Sleep, 400
 
-            ; Move mouse to position (ONLY for Method 1) - REALISTIC
-            MouseMove, 12, 474, 5
-            Sleep, 200
-            Click, Down
-            Sleep, 50
-            Click, Up
-            Sleep, 500
-        }
-        else if (ActiveMethod = 2)
-        {
-            ; METHOD 2: Rotation Only - Hollow Purple + Fuga Support
-            ; Move mouse to screen center - REALISTIC
-            MouseMove, A_ScreenWidth/2, A_ScreenHeight/2, 3
-            Sleep, 100
-
-            ; Press right mouse button
-            Click, Right, Down
-            Sleep, 100
-
-            ; Rotate left - REALISTIC
-            MouseMove, -5.7, 0, 3, R
-            Sleep, 100
-
-            ; Release right mouse button
-            Click, Right, Up
-            Sleep, 100
-
-            Send, {Control}
-            Sleep, 500
-            Send, {Control}
-            Sleep, 2000
-
-            ; Click bottom left corner
-            Send, 1
-        }
+        ; Move mouse to position (ONLY for Method 1) - REALISTIC
+        MouseMove, 750, 420, 5
+        Sleep, 200
+        Click, Down
+        Sleep, 50
+        Click, Up
+        Sleep, 500
 
         ; === COMMON SEQUENCE ===
         GuiControl,, StatusText, Executing attack...
