@@ -23,7 +23,7 @@ Gui, Add, Text, x20 y15 w300 Center, === RAID MACRO CONTROLLER ===
 Gui, Add, GroupBox, x20 y50 w300 h120, Method Selection
 
 Gui, Add, Radio, x40 y75 w260 vMethod1 gMethodSwitch Checked, Method 1: No Rotation (Fuga + Meteor Support)
-Gui, Add, Radio, x40 y105 w260 vMethod2 gMethodSwitch, Method 2: Rotation Only (Hollow Purple + Fuga Support)
+Gui, Add, Radio, x40 y105 w260 vMethod2 gMethodSwitch, Method 2: Rotation Only (Hollow Purple + Fuga + Disaster tides Support)
 
 Gui, Add, Text, x40 y140 w260 cYellow, Active Method: 1
 
