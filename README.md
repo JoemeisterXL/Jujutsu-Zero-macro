@@ -9,7 +9,7 @@ An efficient standalone macro tool for the **Jogo Raid** in Jujutsu Zero (Roblox
 The macro is designed to work on **any raid difficulty**, provided your stats are high enough to finish the fight instantly.
 
 * **Raid Tiers:** Works on all stages (Easy, Medium, Hard, etc.) **as long as you can One-Tap the boss.**
-* **Characters:** You must use either **Sukuna** or **Jogo**.
+* **Characters:** You can use **All special grades**.
 * **Skill:** Your **Final Attack** must be unlocked.
 * **Slot:** The character **MUST** be placed in the **1st slot**.
 * **Power:** If the boss survives the first hit, the macro loop will break.
