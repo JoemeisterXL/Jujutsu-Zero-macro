@@ -112,7 +112,7 @@ F1::
             Send, {c Down}
             Sleep, 800
             Send, {c Up}
-            Sleep, 5000
+            Sleep, 9000
 
             Send, 2
             Sleep, 800
