@@ -114,7 +114,7 @@ F1::
             Sleep, 100
 
             ; Rotate left - REALISTIC
-            MouseMove, -5.7, 0, 3, R
+            MouseMove, -5.8, 0, 3, R
             Sleep, 100
 
             ; Release right mouse button
@@ -162,7 +162,7 @@ F1::
         ; Search for Retry Button
         GuiControl,, StatusText, Searching for retry button...
             ToolTip, Searching for retry button
-            imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png"] 
+            imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png", "image.png"] 
         ImageFound := false
 
         Loop, 4 

@@ -2,6 +2,7 @@
 ; CONFIGURATION
 ;===========================================
 #NoEnv
+#SingleInstance Force
 SetWorkingDir %A_ScriptDir%
 CoordMode, Mouse, Screen
 CoordMode, Pixel, Screen
@@ -20,36 +21,43 @@ Gui, Font, s10 cWhite, Segoe UI
 
 Gui, Add, Text, x20 y15 w300 Center, === RAID MACRO CONTROLLER ===
 
-Gui, Add, GroupBox, x20 y50 w300 h120, Method Selection
+;--- Method Selection Group ---
+Gui, Add, GroupBox, x20 y50 w300 h150, Method Selection
+Gui, Add, Radio, x40 y75 w260 vMethodRadio1 gMethodSwitch Checked, Method 1: All supported | Slot 1 move
+Gui, Add, Radio, x40 y105 w260 vMethodRadio2 gMethodSwitch, Method 2: All supported | Both Slots
+Gui, Add, Radio, x40 y135 w260 vMethodRadio3 gMethodSwitch, Method 3: Festering/Spear (Both Slots and Both swords needed)
 
-; Unique variables: vMethodRadio1 and vMethodRadio2
-Gui, Add, Radio, x40 y75 w260 vMethodRadio1 gMethodSwitch Checked, Method 1: (All supported | Slot 1 move only)
-Gui, Add, Radio, x40 y105 w260 vMethodRadio2 gMethodSwitch, Method 2: (All supported | Both Slot moves)
+; Info-Text zur aktiven Methode (etwas tiefer gesetzt für Sauberkeit)
+Gui, Font, s9 Bold cYellow
+Gui, Add, Text, x40 y175 w260 vMethodText, Active Method: 1
+Gui, Font, s10 norm cWhite
 
-; vMethodText allows the GUI to update the display dynamically
-Gui, Add, Text, x40 y140 w260 cYellow vMethodText, Active Method: 1
+;--- Controls Group ---
+Gui, Add, GroupBox, x20 y210 w300 h110, Controls
+Gui, Add, Text, x40 y235 w260, F1 = Start Macro
+Gui, Add, Text, x40 y255 w260, F2 = Stop / Reload
+Gui, Add, Text, x40 y275 w260, F3/F4/F5 = Quick Switch Method
+Gui, Add, Text, x40 y295 w260, ESC = Close GUI
 
-Gui, Add, GroupBox, x20 y180 w300 h100, Controls
-Gui, Add, Text, x40 y205 w260, F1 = Start Macro
-Gui, Add, Text, x40 y225 w260, F2 = Stop Macro (Reload)
-Gui, Add, Text, x40 y245 w260, ESC = Close GUI
+;--- Status Group ---
+Gui, Add, GroupBox, x20 y330 w300 h60, Status
+Gui, Add, Text, x40 y355 w260 vStatusText cLime, Ready - Press F1 to Start
 
-Gui, Add, GroupBox, x20 y290 w300 h80, Status
-Gui, Add, Text, x40 y315 w260 vStatusText cLime, Ready - Press F1 to Start
-
-Gui, Show, w340 h390, Raid Macro v2.0
+Gui, Show, w340 h410, Raid Macro v2.0
 return
 
 ;===========================================
-; METHOD SWITCH VIA GUI
+; METHOD SWITCH LOGIC
 ;===========================================
 MethodSwitch:
     Gui, Submit, NoHide
-    if (MethodRadio1) {
+    if (MethodRadio1)
         ActiveMethod := 1
-    } else {
+    else if (MethodRadio2)
         ActiveMethod := 2
-    }
+    else if (MethodRadio3)
+        ActiveMethod := 3
+
     GuiControl,, StatusText, Method %ActiveMethod% activated
     GuiControl,, MethodText, Active Method: %ActiveMethod%
 return
@@ -112,24 +120,46 @@ F1::
             Sleep, 9000
 
             Send, 2
-
             Sleep, 800
             Send, {c Down}
             Sleep, 800
             Send, {c Up}
             Sleep, 9000
         }
+        else if (ActiveMethod = 3)
+        {
+            Send, {MButton}
+            Sleep, 500
+            Loop, 2 {
+                Send, {e Down}
+                Sleep, 200
+                Send, {e Up}
+                Sleep, 400
+            }
+            Send, 2
+            Sleep, 100
+            Send, 1
+            Loop, 2{
+                Sleep, 700
+                Send, {r Down}
+                Sleep, 200
+                Send, {r Up}
+                Sleep, 400
+                Send, 2
+            }
+        }
 
-        ; Skip rewards - Fixed calculation (A_ScreenHeight - 20)
-        MouseMove, 10, A_ScreenHeight - 20, 5
+        ; Skip rewards
+        Sleep, 4000
+        MouseMove, 10, 240
         Loop, 4 {
             Click
             Sleep, 500
         }
 
-        ; Search for Retry Button
-        GuiControl,, StatusText, Searching for retry button...
-            imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png"] 
+        ToolTip, Searching for Retry...
+            GuiControl,, StatusText, Searching for retry button...
+            imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png", "image.png"] 
         ImageFound := false
 
         Loop, 4 
@@ -141,7 +171,7 @@ F1::
                 {
                     MouseMove, %FoundX%, %FoundY%, 5
                     Sleep, 100
-                    Click, 2 ; Double click for reliability
+                    Click, 2
                     ImageFound := true
                     break 2 
                 }
@@ -160,17 +190,19 @@ return
 F3::
     ActiveMethod := 1
     GuiControl,, MethodRadio1, 1
-    GuiControl,, MethodRadio2, 0
-    GuiControl,, StatusText, Method 1 activated
-    GuiControl,, MethodText, Active Method: 1
+    Gosub, MethodSwitch
 return
 
 F4::
     ActiveMethod := 2
-    GuiControl,, MethodRadio1, 0
     GuiControl,, MethodRadio2, 1
-    GuiControl,, StatusText, Method 2 activated
-    GuiControl,, MethodText, Active Method: 2
+    Gosub, MethodSwitch
+return
+
+F5::
+    ActiveMethod := 3
+    GuiControl,, MethodRadio3, 1
+    Gosub, MethodSwitch
 return
 
 ;===========================================
@@ -178,7 +210,7 @@ return
 ;===========================================
 F2::
     GuiControl,, StatusText, Macro stopped!
-    Reload ; Reloads script to stop the loop immediately
+    Reload 
 return
 
 GuiClose:
