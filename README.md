@@ -27,7 +27,17 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
     * Press **`F1`** to **Start** the automation.
     * Press **`F2`** to **Stop** and exit the program completely.
    
-
+If you use physical heavently restriction
+-Use methode 3 on toji raids
+middle mouse button
+press E (long dash)
+press E (long dash)
+press number 1 (Festering Life Sword)
+press R (Festering Life Sword ability)
+press number 2 (Inverted Spear of Heaven)
+press R (Inverted Spear of Heaven ability)
+The same as the other scripts (next button and retry)
+U need to have maxed the two swords to max damage
 
 ---
 
