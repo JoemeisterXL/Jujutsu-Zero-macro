@@ -22,18 +22,19 @@ Gui, Add, Text, x20 y15 w300 Center, === RAID MACRO CONTROLLER ===
 
 Gui, Add, GroupBox, x20 y50 w300 h120, Method Selection
 
-Gui, Add, Radio, x40 y75 w260 vMethod1 gMethodSwitch Checked, Method 1: (Fuga + Meteor + Hollow purple + Disaster tides )
+; Unique variables: vMethodRadio1 and vMethodRadio2
+Gui, Add, Radio, x40 y75 w260 vMethodRadio1 gMethodSwitch Checked, Method 1: (All supported | Slot 1 move only)
+Gui, Add, Radio, x40 y105 w260 vMethodRadio2 gMethodSwitch, Method 2: (All supported | Both Slot moves)
 
-Gui, Add, Text, x40 y140 w260 cYellow, Active Method: 1
+; vMethodText allows the GUI to update the display dynamically
+Gui, Add, Text, x40 y140 w260 cYellow vMethodText, Active Method: 1
 
 Gui, Add, GroupBox, x20 y180 w300 h100, Controls
-
 Gui, Add, Text, x40 y205 w260, F1 = Start Macro
-Gui, Add, Text, x40 y225 w260, F2 = Stop Macro
+Gui, Add, Text, x40 y225 w260, F2 = Stop Macro (Reload)
 Gui, Add, Text, x40 y245 w260, ESC = Close GUI
 
 Gui, Add, GroupBox, x20 y290 w300 h80, Status
-
 Gui, Add, Text, x40 y315 w260 vStatusText cLime, Ready - Press F1 to Start
 
 Gui, Show, w340 h390, Raid Macro v2.0
@@ -44,10 +45,13 @@ return
 ;===========================================
 MethodSwitch:
     Gui, Submit, NoHide
-    ActiveMethod := 1
-    GuiControl,, StatusText, Method 1 activated (No Rotation)
-    GuiControl, Text, Text6, Active Method: 1
-
+    if (MethodRadio1) {
+        ActiveMethod := 1
+    } else {
+        ActiveMethod := 2
+    }
+    GuiControl,, StatusText, Method %ActiveMethod% activated
+    GuiControl,, MethodText, Active Method: %ActiveMethod%
 return
 
 ;===========================================
@@ -57,8 +61,9 @@ F1::
     GuiControl,, StatusText, Macro running... (Method %ActiveMethod%)
     Loop
     {
-        ToolTip, Run started (Method %ActiveMethod%)
+        ToolTip, Waiting for "start.png"...
 
+        ; Look for the start image
         Loop
         {
             ImageSearch, StartX, StartY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 start.png
@@ -67,11 +72,10 @@ F1::
             Sleep, 2000
         }
 
-        ToolTip, Found first image - Method %ActiveMethod%
-        GuiControl,, StatusText, Image found - Executing Method %ActiveMethod%
+        ToolTip, Found start - Executing Method %ActiveMethod%
+        GuiControl,, StatusText, Image found - Executing...
 
-        ; METHOD 1: No Rotation - Fuga + Meteor Support
-        ; Move mouse to screen center - REALISTIC
+        ; Move mouse to screen center
         MouseMove, A_ScreenWidth/2, A_ScreenHeight/2, 3
         Sleep, 100
 
@@ -82,52 +86,54 @@ F1::
         Send, 1
         Sleep, 400
 
-        ; Move mouse to position (ONLY for Method 1) - REALISTIC
-        MouseMove, 750, 420, 5
+        ; Move mouse to click position
+        MouseMove, 747, 413, 5
         Sleep, 200
         Click, Down
         Sleep, 50
         Click, Up
         Sleep, 500
 
-        ; === COMMON SEQUENCE ===
-        GuiControl,, StatusText, Executing attack...
+        ; === ATTACK SEQUENCE ===
+        if (ActiveMethod = 1)
+        {
+            Sleep, 800
+            Send, {c Down}
+            Sleep, 800
+            Send, {c Up}
+            Sleep, 7000
+        }
+        else if (ActiveMethod = 2)
+        {
+            Sleep, 800
+            Send, {c Down}
+            Sleep, 800
+            Send, {c Up}
+            Sleep, 9000
 
-        ; Attack (Key C)
-        Sleep, 800
-        Send, {c Down}
-        Sleep, 800
-        Send, {c Up}
-        Sleep, 9000
+            Send, 2
 
-        Send, 2
+            Sleep, 800
+            Send, {c Down}
+            Sleep, 800
+            Send, {c Up}
+            Sleep, 9000
+        }
 
-        Sleep, 800
-        Send, {c Down}
-        Sleep, 800
-        Send, {c Up}
-        Sleep, 9000
-
-        ; Skip rewards - REALISTIC
-        MouseMove, 10, A_ScreenHeight 20, 5
-        Sleep, 100
-        Click
-        Sleep, 500
-        Click
-        Sleep, 500
-        Click
-        Sleep, 500
-        Click
+        ; Skip rewards - Fixed calculation (A_ScreenHeight - 20)
+        MouseMove, 10, A_ScreenHeight - 20, 5
+        Loop, 4 {
+            Click
+            Sleep, 500
+        }
 
         ; Search for Retry Button
         GuiControl,, StatusText, Searching for retry button...
-            ToolTip, Searching for retry button
             imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png"] 
         ImageFound := false
 
         Loop, 4 
         {
-            ToolTip, Search round %A_Index% of 4
             for index, fileName in imageList 
             {
                 ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *60 %fileName%
@@ -135,58 +141,44 @@ F1::
                 {
                     MouseMove, %FoundX%, %FoundY%, 5
                     Sleep, 100
-                    Loop, 2 {
-                        Click
-                        Sleep, 100
-                    }
+                    Click, 2 ; Double click for reliability
                     ImageFound := true
                     break 2 
                 }
             }
-            if (ImageFound)
-                break
             Sleep, 1000 
         }
 
-        GuiControl,, StatusText, Run completed - Restarting...
-        ToolTip, Run finished (Method %ActiveMethod%)
+        GuiControl,, StatusText, Run completed - Waiting 15s...
         Sleep, 15000
-        ToolTip
     }
 return
 
 ;===========================================
-; HOTKEYS
+; HOTKEYS FOR QUICK SWITCH
 ;===========================================
 F3::
     ActiveMethod := 1
-    GuiControl,, Method1, 1
-    GuiControl,, Method2, 0
-    GuiControl,, StatusText, Method 1 activated (No Rotation)
-    GuiControl, Text, Text6, Active Method: 1
-    ToolTip, Method 1 activated
-    Sleep, 2000
-    ToolTip
+    GuiControl,, MethodRadio1, 1
+    GuiControl,, MethodRadio2, 0
+    GuiControl,, StatusText, Method 1 activated
+    GuiControl,, MethodText, Active Method: 1
 return
 
 F4::
     ActiveMethod := 2
-    GuiControl,, Method1, 0
-    GuiControl,, Method2, 1
-    GuiControl,, StatusText, Method 2 activated (Rotation Only)
-    GuiControl, Text, Text6, Active Method: 2
-    ToolTip, Method 2 activated
-    Sleep, 2000
-    ToolTip
+    GuiControl,, MethodRadio1, 0
+    GuiControl,, MethodRadio2, 1
+    GuiControl,, StatusText, Method 2 activated
+    GuiControl,, MethodText, Active Method: 2
 return
 
 ;===========================================
-; EXIT
+; EXIT / STOP
 ;===========================================
 F2::
     GuiControl,, StatusText, Macro stopped!
-    Sleep, 1000
-ExitApp
+    Reload ; Reloads script to stop the loop immediately
 return
 
 GuiClose:
