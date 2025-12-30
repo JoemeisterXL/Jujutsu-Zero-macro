@@ -104,7 +104,7 @@ F1::
             Send, {c Down}
             Sleep, 400
             Send, {c Up}
-            Sleep, 5000
+            Sleep, 6000
         }
         else if (ActiveMethod = 2)
         {
@@ -119,7 +119,7 @@ F1::
             Send, {c Down}
             Sleep, 800
             Send, {c Up}
-            Sleep, 5000
+            Sleep, 6000
         }
         else if (ActiveMethod = 3)
         {
