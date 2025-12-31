@@ -9,19 +9,19 @@ CoordMode, Pixel, Screen
 SendMode Event
 SetDefaultMouseSpeed, 0
 
-; Deine Referenz-Auflösung
+; Your Reference Resolution (The res you used to find the coordinates)
 RefWidth := 1920
 RefHeight := 1080
 
-; Aktuelle Auflösung des Nutzers
+; Automatically detect the user's current resolution
 CurrentWidth := A_ScreenWidth
 CurrentHeight := A_ScreenHeight
 
-; Skalierungsfaktoren
+; Calculate scaling factors
 ScaleX := CurrentWidth / RefWidth
 ScaleY := CurrentHeight / RefHeight
 
-; Feste Koordinaten (skaliert)
+; Prepare fixed coordinates (scaled)
 PNew_X := 1732 * ScaleX
 PNew_Y := 975 * ScaleY
 POld_X := 1800 * ScaleX
@@ -36,7 +36,7 @@ Gui, Font, s10 cWhite, Segoe UI
 
 Gui, Add, Text, x20 y15 w300 Center, === RAID MACRO CONTROLLER ===
 
-;--- Checkbox Group für Bilder ---
+;--- Checkbox Group for Images ---
 Gui, Add, GroupBox, x20 y50 w300 h130, Select Images to Search
 Gui, Add, Checkbox, x40 y75 w240 vCheckCrate1, Strengthened Crate 1
 Gui, Add, Checkbox, x40 y95 w240 vCheckCrate2, Strengthened Crate 2
@@ -60,10 +60,10 @@ return
 ; MAIN LOOP - F1 TO START
 ;===========================================
 F1::
-    ; GUI auslesen, um zu sehen was angehakt ist
+    ; Read GUI state to see which boxes are checked
     Gui, Submit, NoHide
 
-    ; Array der Bilder basierend auf Auswahl erstellen
+    ; Create an array of images based on selection
     ActiveImages := []
     if (CheckCrate1)
         ActiveImages.Push("Strengthened_Crate1.png")
@@ -74,6 +74,7 @@ F1::
     if (CheckVolcanic)
         ActiveImages.Push("Volcanic_Crate.png")
 
+    ; Safety check: Ensure at least one image is selected
     if (ActiveImages.Length() = 0) {
         GuiControl,, StatusText, Error: No image selected!
         return
@@ -82,10 +83,11 @@ F1::
     GuiControl,, StatusText, Macro running...
     Loop
     {
-        ; 1. Ausgewählte Bilder suchen
+        ; 1. SEARCH FOR SELECTED IMAGES
         for index, imageName in ActiveImages
         {
             ToolTip, Searching: %imageName%
+            ; Search with *50 variation for color tolerance
             ImageSearch, FoundX, FoundY, 0, 0, A_ScreenWidth, A_ScreenHeight, *50 %imageName%
 
             if (ErrorLevel = 0)
@@ -97,9 +99,9 @@ F1::
                 Sleep, 500
             }
         }
-        ToolTip
+        ToolTip ; Remove ToolTip
 
-        ; 2. ZUERST Neue Position (1732, 975 skaliert)
+        ; 2. CLICK NEW POSITION FIRST (1732, 975 scaled)
         GuiControl,, StatusText, Clicking Pos 1732...
         MouseMove, %PNew_X%, %PNew_Y%, 2
         Sleep, 200
@@ -107,7 +109,7 @@ F1::
 
         Sleep, 1000
 
-        ; 3. DANACH Alte Position (1800, 109 skaliert)
+        ; 3. CLICK OLD POSITION NEXT (1800, 109 scaled)
         GuiControl,, StatusText, Clicking Pos 1800...
         MouseMove, %POld_X%, %POld_Y%, 2
         Sleep, 200
@@ -117,7 +119,7 @@ F1::
         Sleep, 900
         Click, %POld_X%, %POld_Y%
 
-        Sleep, 1000
+        Sleep, 1000 ; Wait before starting the next full loop
     }
 return
 
