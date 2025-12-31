@@ -159,7 +159,7 @@ F1::
 
         ToolTip, Searching for Retry...
             GuiControl,, StatusText, Searching for retry button...
-            imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png", "image.png"] 
+            imageList := ["image1920x1080.png", "image1366x768.png", "image1760x990.png", "image2560x1440.png", "image.png", "Image.png"] 
         ImageFound := false
 
         Loop, 4 
