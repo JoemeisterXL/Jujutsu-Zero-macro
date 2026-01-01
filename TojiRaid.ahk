@@ -472,7 +472,7 @@ LoginDiscord:
                         Send, {c Down}
                         Sleep, 800
                         Send, {c Up}
-                        Sleep, 9000
+                        Sleep, 6000
                     }
                     else if (ActiveMethod = 3)
                     {
