@@ -271,15 +271,15 @@ LoginDiscord:
 
             jsonContent := "{"
             jsonContent .= """embeds"": [{"
-            jsonContent .= """title"": ""📊 Run #" . RunNum . " completed"""
+            jsonContent .= """title"": "" Run #" . RunNum . " completed"""
             jsonContent .= ",""color"": 5814783"
             jsonContent .= ",""fields"": ["
-            jsonContent .= "{""name"": ""👤 User"", ""value"": """ . userName . """, ""inline"": true},"
-            jsonContent .= "{""name"": ""⚔️ Method"", ""value"": ""Method " . Method . """, ""inline"": true},"
-            jsonContent .= "{""name"": ""⏱️ Run Time"", ""value"": """ . RunTime . """, ""inline"": true},"
-            jsonContent .= "{""name"": ""📈 Average"", ""value"": """ . avgTime . "s"", ""inline"": true},"
-            jsonContent .= "{""name"": ""🔄 Total Runs"", ""value"": """ . RunNum . """, ""inline"": true},"
-            jsonContent .= "{""name"": ""⏲️ Session Time"", ""value"": """ . FormatSeconds(TotalTime) . """, ""inline"": true}"
+            jsonContent .= "{""name"": "" User"", ""value"": """ . userName . """, ""inline"": true},"
+            jsonContent .= "{""name"": "" Method"", ""value"": ""Method " . Method . """, ""inline"": true},"
+            jsonContent .= "{""name"": "" Run Time"", ""value"": """ . RunTime . """, ""inline"": true},"
+            jsonContent .= "{""name"": "" Average"", ""value"": """ . avgTime . "s"", ""inline"": true},"
+            jsonContent .= "{""name"": "" Total Runs"", ""value"": """ . RunNum . """, ""inline"": true},"
+            jsonContent .= "{""name"": "" Session Time"", ""value"": """ . FormatSeconds(TotalTime) . """, ""inline"": true}"
             jsonContent .= "]}]}"
 
             FileAppend, %jsonContent%, %jsonFile%, UTF-8
