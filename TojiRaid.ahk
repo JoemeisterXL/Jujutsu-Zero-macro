@@ -112,7 +112,7 @@ F1::
             SearchStartTime := A_TickCount
             Loop
             {
-                ImageSearch, BlueX, BlueY, 0, 0, A_ScreenWidth, A_ScreenHeight, *75 Toji.png
+                ImageSearch, BlueX, BlueY, 0, 0, A_ScreenWidth, A_ScreenHeight, *60 Toji.png
 
                 if (ErrorLevel = 0)
                 {
