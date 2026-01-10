@@ -41,11 +41,11 @@ global IsRunning := false
 ;===========================================
 ; CREATE GUI
 ;===========================================
-MainGui := Gui("+AlwaysOnTop", "Raid Macro v5.1 - Toji")
+MainGui := Gui("+AlwaysOnTop", "Raid Macro v5.1 - Jogo")
 MainGui.BackColor := "1a1a1a"
 MainGui.SetFont("s10 cWhite", "Segoe UI")
 
-MainGui.Add("Text", "x20 y15 w300 Center", "=== RAID MACRO CONTROLLER - Toji ===")
+MainGui.Add("Text", "x20 y15 w300 Center", "=== RAID MACRO CONTROLLER - Jogo ===")
 
 ;--- Statistics Group ---
 MainGui.Add("GroupBox", "x20 y50 w300 h100", "Statistics")
@@ -56,10 +56,10 @@ MainGui.SetFont("s10 norm cWhite")
 
 ;--- Method Selection Group ---
 MainGui.Add("GroupBox", "x20 y160 w300 h250", "Method Selection")
-Radio1 := MainGui.Add("Radio", "x40 y185 w260 vMethodRadio1 Checked", "Method 1: ImageSearch | Slot 1 move")
+Radio1 := MainGui.Add("Radio", "x40 y185 w260 vMethodRadio1 Checked", "Method 1: Image Search | Slot 1 (NOT WORKING To find the images)")
 Radio2 := MainGui.Add("Radio", "x40 y225 w260 vMethodRadio2", "Method 2: right,left,above -> keybind R | Slot 1 (Fast) (Shrine works best)")
 Radio3 := MainGui.Add("Radio", "x40 y265 w260 vMethodRadio3", "Method 3: right,left,above -> keybind R | Slot 1+2 keybind R (Shrine works best)")
-Radio4 := MainGui.Add("Radio", "x40 y305 w260 vMethodRadio4", "Method 4: right,left,above -> keybind R | R + C move")
+Radio4 := MainGui.Add("Radio", "x40 y305 w260 vMethodRadio4", "Method 4: right,left,above -> keybind R | R + C move (Not recommended)")
 
 Radio1.OnEvent("Click", MethodSwitch)
 Radio2.OnEvent("Click", MethodSwitch)
@@ -187,20 +187,19 @@ F1:: {
 
         ; === ATTACK SEQUENCE ===
         if (ActiveMethod = 1) {
-            ; METHOD 1: Original Toji Image Search with Camera Rotation
+            ; METHOD 1: Original Jogo Image Search with Camera Rotation
             FoundBlue := false
             Loop 20 {
-                ToolTip("Searching TojiPng Folder (Attempt " A_Index "/20)...")
-                StatusText.Value := "Searching TojiPng (" A_Index "/20)..."
-
+                ToolTip("Searching JogoPng Folder (Attempt " A_Index "/20)...")
+                StatusText.Value := "Searching JogoPng (" A_Index "/20)..."
                 SearchStartTime := A_TickCount
                 Loop {
-                    Loop Files, A_ScriptDir . "\TojiPng\*.png" 
+                    Loop Files, A_ScriptDir . "\JogoPng\*.png" 
                     {
-                        if ImageSearch(&BlueX, &BlueY, 0, 0, A_ScreenWidth, A_ScreenHeight, "*75 " . A_LoopFileFullPath) 
+                        if ImageSearch(&BlueX, &BlueY, 0, 0, A_ScreenWidth, A_ScreenHeight, "*55 " . A_LoopFileFullPath) 
                         {
-                            ToolTip("Toji Found: " . A_LoopFileName)
-                            StatusText.Value := "Toji found! Clicking..."
+                            ToolTip("Jogo Found: " . A_LoopFileName)
+                            StatusText.Value := "Jogo found! Clicking..."
                             FoundBlue := true
 
                             MouseMove(BlueX, BlueY, 5)
@@ -221,7 +220,7 @@ F1:: {
                     break
 
                 ; Rotate camera to the right
-                ToolTip("Toji not found - Rotating camera right...")
+                ToolTip("Jogo not found - Rotating camera right...")
                 Click("Right Down")
                 Sleep(100)
                 DllCall("mouse_event", "UInt", 0x0001, "Int", 185, "Int", 0, "UInt", 0, "UPtr", 0)
@@ -235,8 +234,8 @@ F1:: {
             }
 
             if (!FoundBlue) {
-                ToolTip("Warning: No image in TojiPng found!")
-                StatusText.Value := "WARNING: TojiPng not found!"
+                ToolTip("Warning: No image in JogoPng found!")
+                StatusText.Value := "WARNING: JogoPng not found!"
                 Sleep(2000)
             }
 
@@ -320,7 +319,7 @@ F1:: {
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(1300)
+                Sleep(1500)
 
                 ; Click center before C press
                 MouseMove(CenterX, CenterY, 0)
@@ -350,6 +349,7 @@ F1:: {
                 Send("{c Down}")
                 Sleep(1000)
                 Send("{c Up}")
+                Sleep(1500)
 
                 if CheckForRetry()
                     break
