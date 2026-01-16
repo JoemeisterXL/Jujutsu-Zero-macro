@@ -308,24 +308,14 @@ F1:: {
             Loop {
                 ToolTip("Method 4 - Attack Cycle " A_Index)
 
-                ; Calculate screen center
-                CenterX := A_ScreenWidth / 2
-                CenterY := A_ScreenHeight / 2
-
                 ; First Attack - Slot 1
-                Sleep(2000)
+                Sleep(1000)
                 Send("1")
                 Sleep(800)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
                 Sleep(1500)
-
-                ; Click center before C press
-                MouseMove(CenterX, CenterY, 0)
-                Sleep(800)
-                Click()
-                Sleep(800)
 
                 Send("{c Down}")
                 Sleep(1000)
@@ -339,12 +329,6 @@ F1:: {
                 Sleep(1000)
                 Send("{r Up}")
                 Sleep(1300)
-
-                ; Click center before C press
-                MouseMove(CenterX, CenterY, 0)
-                Sleep(800)
-                Click()
-                Sleep(800)
 
                 Send("{c Down}")
                 Sleep(1000)
