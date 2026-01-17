@@ -41,7 +41,7 @@ global IsRunning := false
 ;===========================================
 ; CREATE GUI
 ;===========================================
-MainGui := Gui("+AlwaysOnTop", "Raid Macro v5.1 - Jogo")
+MainGui := Gui("+AlwaysOnTop", "Raid Macro v6 - Jogo")
 MainGui.BackColor := "1a1a1a"
 MainGui.SetFont("s10 cWhite", "Segoe UI")
 
@@ -57,9 +57,9 @@ MainGui.SetFont("s10 norm cWhite")
 ;--- Method Selection Group ---
 MainGui.Add("GroupBox", "x20 y160 w300 h250", "Method Selection")
 Radio1 := MainGui.Add("Radio", "x40 y185 w260 vMethodRadio1 Checked", "Method 1: Image Search | Slot 1 (NOT WORKING To find the images)")
-Radio2 := MainGui.Add("Radio", "x40 y225 w260 vMethodRadio2", "Method 2: right,left,above -> keybind R | Slot 1 (Fast) (Shrine works best)")
-Radio3 := MainGui.Add("Radio", "x40 y265 w260 vMethodRadio3", "Method 3: right,left,above -> keybind R | Slot 1+2 keybind R (Shrine works best)")
-Radio4 := MainGui.Add("Radio", "x40 y305 w260 vMethodRadio4", "Method 4: right,left,above -> keybind R | R + C move (Not recommended)")
+Radio2 := MainGui.Add("Radio", "x40 y225 w260 vMethodRadio2", "Method 1: Keybind R | Slot 1 (Fast | No ult attack (like fuga))")
+Radio3 := MainGui.Add("Radio", "x40 y265 w260 vMethodRadio3", "Method 2: All Moves (No ult attack, like fuga) | Slot 1+2 ")
+Radio4 := MainGui.Add("Radio", "x40 y305 w260 vMethodRadio4", "Method 4: All Moves + Ult | Slot 1+2 ")
 
 Radio1.OnEvent("Click", MethodSwitch)
 Radio2.OnEvent("Click", MethodSwitch)
@@ -258,15 +258,27 @@ F1:: {
 
             Loop {
                 ToolTip("Method 2 - Attack Cycle " A_Index)
+
                 Sleep(1000)
                 Send("1")
+                Sleep(800)
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(500)
+
                 Sleep(800)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(800)
-                Send("1")
                 Sleep(500)
+
+                Sleep(500)
+                Send("{f Down}")
+                Sleep(1000)
+                Send("{f Up}")
+                Sleep(500)
+                Send("1")
 
                 if CheckForRetry()
                     break
@@ -281,20 +293,46 @@ F1:: {
                 ToolTip("Method 3 - Double Attack Cycle " A_Index)
 
                 ; First Attack - Slot 1
-                Sleep(2000)
+                Sleep(1000)
                 Send("1")
                 Sleep(800)
-                Send("{r Down}")
-                Sleep(1200)
-                Send("{r Up}")
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(1500)
+
                 Sleep(800)
+                Send("{r Down}")
+                Sleep(1000)
+                Send("{r Up}")
+                Sleep(900)
+
+                Sleep(800)
+                Send("{f Down}")
+                Sleep(1000)
+                Send("{f Up}")
+                Sleep(900)
+
                 ; Second Attack - Slot 2
+                Sleep(1000)
                 Send("2")
                 Sleep(800)
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(1500)
+
+                Sleep(800)
                 Send("{r Down}")
-                Sleep(1200)
+                Sleep(1000)
                 Send("{r Up}")
-                Sleep(500)
+                Sleep(900)
+
+                Sleep(800)
+                Send("{f Down}")
+                Sleep(1000)
+                Send("{f Up}")
+                Sleep(900)
 
                 if CheckForRetry()
                     break
@@ -312,28 +350,49 @@ F1:: {
                 Sleep(1000)
                 Send("1")
                 Sleep(800)
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(500)
+
+                Sleep(500)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(1500)
+                Sleep(500)
 
+                Sleep(500)
+                Send("{f Down}")
+                Sleep(1000)
+                Send("{f Up}")
+                Sleep(500)
+
+                Sleep (500)
                 Send("{c Down}")
                 Sleep(1000)
                 Send("{c Up}")
-                Sleep(1500)
+                Sleep(500)
 
                 ; Second Attack - Slot 2
+                Sleep(1000)
                 Send("2")
                 Sleep(800)
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(500)
+
+                Sleep(500)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(1300)
+                Sleep(500)
 
-                Send("{c Down}")
+                Sleep(500)
+                Send("{f Down}")
                 Sleep(1000)
-                Send("{c Up}")
-                Sleep(1500)
+                Send("{f Up}")
+                Sleep(500)
 
                 if CheckForRetry()
                     break
