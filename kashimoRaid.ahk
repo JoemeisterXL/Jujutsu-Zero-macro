@@ -41,11 +41,11 @@ global IsRunning := false
 ;===========================================
 ; CREATE GUI
 ;===========================================
-MainGui := Gui("+AlwaysOnTop", "Raid Macro v6 - kashimo")
+MainGui := Gui("+AlwaysOnTop", "Raid Macro v9 - Kashimo")
 MainGui.BackColor := "1a1a1a"
 MainGui.SetFont("s10 cWhite", "Segoe UI")
 
-MainGui.Add("Text", "x20 y15 w300 Center", "=== RAID MACRO CONTROLLER - kashimo ===")
+MainGui.Add("Text", "x20 y15 w300 Center", "=== RAID MACRO CONTROLLER - Kashimo ===")
 
 ;--- Statistics Group ---
 MainGui.Add("GroupBox", "x20 y50 w300 h100", "Statistics")
@@ -55,35 +55,51 @@ TimerText := MainGui.Add("Text", "x40 y100 w260 Center", "Time: 00:00:00")
 MainGui.SetFont("s10 norm cWhite")
 
 ;--- Method Selection Group ---
-; HIER WURDE VERSCHOBEN: Alt 2->1, Alt 3->2, Alt 4->3
-MainGui.Add("GroupBox", "x20 y160 w300 h250", "Method Selection")
-Radio1 := MainGui.Add("Radio", "x40 y225 w260 vMethodRadio1 Checked", "Method 1: Keybind R | Slot 1 (Fast | No ult attack (like fuga)) (4x Start Reset)")
-Radio2 := MainGui.Add("Radio", "x40 y265 w260 vMethodRadio2", "Method 2: All Moves (No ult attack, like fuga) | Slot 1+2 (4x Start Reset)")
-Radio3 := MainGui.Add("Radio", "x40 y305 w260 vMethodRadio3", "Method 3: All Moves (4x Start Reset)")
+; HÖHE ANGEPASST: h330 -> h380 für die Domain Checkbox
+MainGui.Add("GroupBox", "x20 y160 w300 h380", "Configuration")
+
+Radio1 := MainGui.Add("Radio", "x40 y190 w260 vMethodRadio1 Checked", "Method 1: All Moves (Not C move) | Only Slot 1 moves (Fast)")
+Radio2 := MainGui.Add("Radio", "x40 y230 w260 vMethodRadio2", "Method 2: All Moves | Slot 1+2 |(Without C move)")
+Radio3 := MainGui.Add("Radio", "x40 y270 w260 vMethodRadio3", "Method 3: All Moves | Slot 1+2 |(With C move)")
+Radio4 := MainGui.Add("Radio", "x40 y310 w260 vMethodRadio4", "Method 4: fav methode | Sukuna only | (Attacks within Respawning)")
+
+; --- RESET FELD (Farbe angepasst) ---
+MainGui.Add("Text", "x40 y350 w120", "Initial Resets:")
+
+; Background333333 macht den Hintergrund dunkelgrau
+ResetInput := MainGui.Add("Edit", "x160 y347 w50 Number Center Background333333", "10")
+MainGui.SetFont("s10 norm cWhite") ; Zurück zu Weiß
+
+MainGui.Add("UpDown", "vResetCountRange Range0-50", 10)
+
+; --- NEU: Domain Checkbox ---
+DomainCheck := MainGui.Add("Checkbox", "x40 y390 w260 vDomainEnabled", "Enable Domain (Key T)")
+; -----------------------------
 
 Radio1.OnEvent("Click", MethodSwitch)
 Radio2.OnEvent("Click", MethodSwitch)
 Radio3.OnEvent("Click", MethodSwitch)
+Radio4.OnEvent("Click", MethodSwitch)
 
 ; Info Text
 MainGui.SetFont("s9 Bold cYellow")
-MethodText := MainGui.Add("Text", "x40 y375 w260", "Active Method: 1")
+MethodText := MainGui.Add("Text", "x40 y505 w260", "Active Method: 1")
 MainGui.SetFont("s10 norm cWhite")
 
 ;--- Controls Group ---
-MainGui.Add("GroupBox", "x20 y420 w300 h130", "Controls")
-MainGui.Add("Text", "x40 y445 w260", "F1 = Start Macro")
-MainGui.Add("Text", "x40 y465 w260", "F2 = Stop / Reload")
-MainGui.Add("Text", "x40 y485 w260", "F3/F4/F5 = Quick Switch")
-MainGui.Add("Text", "x40 y505 w260", "F7 = Toggle Method 1-3")
-MainGui.Add("Text", "x40 y525 w260", "ESC = Standard Game Function (Ignored)")
+MainGui.Add("GroupBox", "x20 y550 w300 h150", "Controls")
+MainGui.Add("Text", "x40 y575 w260", "F1 = Start Macro")
+MainGui.Add("Text", "x40 y595 w260", "F2 = Stop / Reload")
+MainGui.Add("Text", "x40 y615 w260", "F3/F4/F5/F6 = Quick Switch")
+MainGui.Add("Text", "x40 y635 w260", "F7 = Toggle Method 1-4")
+MainGui.Add("Text", "x40 y655 w260", "ESC = Standard Game Function")
 
 ;--- Status Group ---
-MainGui.Add("GroupBox", "x20 y560 w300 h60", "Status")
-StatusText := MainGui.Add("Text", "x40 y585 w260 cLime", "Ready - Detected: " CurrentWidth "x" CurrentHeight)
+MainGui.Add("GroupBox", "x20 y710 w300 h60", "Status")
+StatusText := MainGui.Add("Text", "x40 y735 w260 cLime", "Ready - Detected: " CurrentWidth "x" CurrentHeight)
 
 MainGui.OnEvent("Close", (*) => ExitApp())
-MainGui.Show("w340 h640")
+MainGui.Show("w340 h790") ; Fensterhöhe angepasst
 
 ;===========================================
 ; TIMER UPDATE FUNCTION
@@ -103,7 +119,6 @@ UpdateTimer() {
     TimerText.Value := "Time: " TimeString
 }
 
-; Start Timer
 SetTimer(UpdateTimer, 1000)
 
 ;===========================================
@@ -117,18 +132,34 @@ MethodSwitch(*) {
         ActiveMethod := 2
     else if (Radio3.Value)
         ActiveMethod := 3
+    else if (Radio4.Value)
+        ActiveMethod := 4
 
     StatusText.Value := "Method " ActiveMethod " activated"
     MethodText.Value := "Active Method: " ActiveMethod
 }
 
 ;===========================================
-; HELPER FUNCTION - CHECK FOR RETRY BUTTON
+; HELPER FUNCTION - DOMAIN EXPANSION
+;===========================================
+PerformDomain() {
+    ; Prüft, ob die Checkbox angehakt ist (Value 1 = an, 0 = aus)
+    if (DomainCheck.Value = 1) {
+        ToolTip("Using Domain Expansion (T)...")
+        Sleep(2500)
+        Send("{t Down}")
+        Sleep(1000)
+        Send("{t Up}")
+        Sleep(2500)
+    }
+}
+
+;===========================================
+; HELPER FUNCTION - CHECK FOR RETRY
 ;===========================================
 CheckForRetry() {
     global RunCount, RunCountText
 
-    ; === RETRY BUTTON SEARCH ===
     ToolTip("Searching for Retry...")
     StatusText.Value := "Searching for retry button..."
 
@@ -141,7 +172,6 @@ CheckForRetry() {
         Sleep(500)
         Click()
 
-        ; Increment Run Counter
         RunCount++
         RunCountText.Value := "Runs: " RunCount
         StatusText.Value := "Run #" RunCount " completed!"
@@ -153,25 +183,46 @@ CheckForRetry() {
 }
 
 ;===========================================
-; HELPER FUNCTION - 5x INITIAL RESET
+; HELPER FUNCTION - INITIAL RESET LOOP
 ;===========================================
 PerformInitialResets() {
-    StatusText.Value := "Performing 5 Initial Resets..."
-    Loop 4 {
-        ToolTip("Initial Reset (" A_Index "/4) - Dont do anything! within respawring (Just to be sure the boss has the focus)")
+    LoopCount := ResetInput.Value
+    if (LoopCount = "")
+        LoopCount := 0
+
+    StatusText.Value := "Performing " LoopCount " Initial Resets..."
+
+    Loop LoopCount {
+        ToolTip("Initial Reset (" A_Index "/" LoopCount ")")
 
         Send("{Esc}")
         Sleep(300)
         Send("r")
         Sleep(300)
         Send("{Enter}")
+        Sleep(300)
 
-        ; Wait for respawn (Adjust if too slow/fast)
-        Sleep(5500) 
+        if (ActiveMethod = 4) {
+            Click(A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(300)
+
+            Click("Right", A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(500)
+
+            Sleep(2000)
+            Send("1")
+            Sleep(1000)
+            Send("{x Down}")
+            Sleep(1200)
+            Send("{x Up}")
+            Sleep(800)
+            Send("1")
+            Sleep(300) 
+        }
+        StatusText.Value := "Resets done. Starting attacks..."
+        ToolTip("Resets done.")
+        Sleep(1000)
     }
-    StatusText.Value := "Resets done. Starting attacks..."
-    ToolTip("Resets done.")
-    Sleep(1000)
 }
 
 ;===========================================
@@ -180,7 +231,6 @@ PerformInitialResets() {
 F1:: {
     global ActiveMethod, StartTime, IsRunning
 
-    ; Start Timer on first run
     if (!IsRunning) {
         StartTime := A_TickCount
         IsRunning := true
@@ -191,7 +241,6 @@ F1:: {
     Loop {
         ToolTip("Waiting for 'start.png'...")
 
-        ; Look for the start image
         Loop {
             if ImageSearch(&StartX, &StartY, 0, 0, A_ScreenWidth, A_ScreenHeight, "*50 " . A_ScriptDir . "\start.png")
                 break
@@ -200,22 +249,22 @@ F1:: {
 
         ToolTip("Executing Method " ActiveMethod)
         StatusText.Value := "Start found - Running..."
-        ToolTip("Start found - Running...")
 
         ; === ATTACK SEQUENCE ===
         if (ActiveMethod = 1) {
-            ; METHOD 1 (War vorher 2): Fast - Slot 1 with R keybind
-
-            ; --- 5x INITIAL RESET ---
+            ; METHOD 1
             PerformInitialResets()
-            ; ------------------------
-
-            StatusText.Value := "Method 1: Looping until Retry found..."
+            StatusText.Value := "Method 1 running..."
             AttackCycle := 0 
 
+            Click(A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(300)
+
+            Click("Right", A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(500)
             Loop {
                 AttackCycle++
-                ToolTip("Method 1 - Attack Cycle " AttackCycle)
+                ToolTip("Method 1 - Cycle " AttackCycle)
 
                 Sleep(1000)
                 Send("1")
@@ -223,20 +272,25 @@ F1:: {
                 Send("{x Down}")
                 Sleep(1000)
                 Send("{x Up}")
+                Sleep(1500)
                 Sleep(500)
 
                 Sleep(500)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(500)
+                Sleep(1500)
 
-                Sleep(500)
                 Send("{f Down}")
                 Sleep(1000)
                 Send("{f Up}")
-                Sleep(500)
+                Sleep(1500)
+
                 Send("1")
+
+                ; --- DOMAIN CHECK ---
+                PerformDomain() 
+                ; --------------------
 
                 if CheckForRetry()
                     break
@@ -244,18 +298,18 @@ F1:: {
             }
 
         } else if (ActiveMethod = 2) {
-            ; METHOD 2 (War vorher 3): Double Attack - Slot 1 + Slot 2 with R keybind
-
-            ; --- 5x INITIAL RESET ---
+            ; METHOD 2
             PerformInitialResets()
-            ; ------------------------
-
-            StatusText.Value := "Method 2: Looping until Retry found..."
+            StatusText.Value := "Method 2 running..."
             AttackCycle := 0 
+            Click(A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(300)
 
+            Click("Right", A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(500)
             Loop {
                 AttackCycle++
-                ToolTip("Method 2 - Double Attack Cycle " AttackCycle)
+                ToolTip("Method 2 - Cycle " AttackCycle)
 
                 ; First Attack - Slot 1
                 Sleep(1000)
@@ -264,19 +318,20 @@ F1:: {
                 Send("{x Down}")
                 Sleep(1000)
                 Send("{x Up}")
-                Sleep(500)
+                Sleep(1500)
 
                 Sleep(500)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(500)
+                Sleep(1500)
 
                 Sleep(500)
                 Send("{f Down}")
                 Sleep(1000)
                 Send("{f Up}")
-                Sleep(500)
+                Sleep(1500)
+
                 ; Second Attack - Slot 2
                 Sleep(1000)
                 Send("2")
@@ -284,19 +339,23 @@ F1:: {
                 Send("{x Down}")
                 Sleep(1000)
                 Send("{x Up}")
-                Sleep(500)
+                Sleep(1500)
 
                 Sleep(500)
                 Send("{r Down}")
                 Sleep(1000)
                 Send("{r Up}")
-                Sleep(500)
+                Sleep(1500)
 
                 Sleep(500)
                 Send("{f Down}")
                 Sleep(1000)
                 Send("{f Up}")
-                Sleep(500)
+                Sleep(1500)
+
+                ; --- DOMAIN CHECK ---
+                PerformDomain() 
+                ; --------------------
 
                 if CheckForRetry()
                     break
@@ -304,20 +363,87 @@ F1:: {
             }
 
         } else if (ActiveMethod = 3) {
-            ; METHOD 3 (War vorher 4): Click center before C press
-
-            ; --- 5x INITIAL RESET ---
+            ; METHOD 3
             PerformInitialResets()
-            ; ------------------------
+            StatusText.Value := "Method 3 running..."
+            AttackCycle := 0 
+            Click(A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(300)
 
-            StatusText.Value := "Method 3: Looping until Retry found..."
+            Click("Right", A_ScreenWidth/2, A_ScreenHeight/2)
+            Sleep(500)
+            Loop {
+                AttackCycle++
+                ToolTip("Method 3 - Cycle " AttackCycle)
+
+                Sleep(1000)
+                Send("1")
+                Sleep(800)
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(1500)
+
+                Sleep(500)
+                Send("{r Down}")
+                Sleep(1000)
+                Send("{r Up}")
+                Sleep(1500)
+
+                Sleep(500)
+                Send("{f Down}")
+                Sleep(1000)
+                Send("{f Up}")
+                Sleep(2000)
+
+                Send("{c Down}")
+                Sleep(1000)
+                Send("{c Up}")
+                Sleep(1500)
+
+                Send("2")
+                Sleep(500)
+                Send("{x Down}")
+                Sleep(1000)
+                Send("{x Up}")
+                Sleep(1500)
+
+                Sleep(900)
+                Send("{r Down}")
+                Sleep(1000)
+                Send("{r Up}")
+                Sleep(1500)
+
+                Sleep(900)
+                Send("{f Down}")
+                Sleep(1000)
+                Send("{f Up}")
+                Sleep(2000)
+
+                Send("{c Down}")
+                Sleep(1000)
+                Send("{c Up}")
+                Sleep(1500)
+
+                ; --- DOMAIN CHECK ---
+                PerformDomain() 
+                ; --------------------
+
+                if CheckForRetry()
+                    break
+                Sleep(1000)
+            }
+
+        } else if (ActiveMethod = 4) {
+            ; METHOD 4
+            PerformInitialResets()
+            StatusText.Value := "Method 4 running..."
             AttackCycle := 0 
 
             Loop {
                 AttackCycle++
-                ToolTip("Method 3 - Attack Cycle " AttackCycle)
+                ToolTip("Method 4 - Cycle " AttackCycle)
 
-                ; First Attack - Slot 1
                 Sleep(1000)
                 Send("1")
                 Sleep(800)
@@ -337,31 +463,16 @@ F1:: {
                 Sleep(1000)
                 Send("{f Up}")
                 Sleep(500)
+
                 Send("{c Down}")
                 Sleep(1000)
                 Send("{c Up}")
-                Sleep(500)
+                Sleep(6000)
+                Send("1")
 
-                ; Second Attack - Slot 2
-                Sleep(1000)
-                Send("2")
-                Sleep(500)
-                Send("{x Down}")
-                Sleep(1000)
-                Send("{x Up}")
-                Sleep(500)
-
-                Sleep(500)
-                Send("{r Down}")
-                Sleep(1000)
-                Send("{r Up}")
-                Sleep(500)
-
-                Sleep(500)
-                Send("{f Down}")
-                Sleep(1000)
-                Send("{f Up}")
-                Sleep(500)
+                ; --- DOMAIN CHECK ---
+                PerformDomain() 
+                ; --------------------
 
                 if CheckForRetry()
                     break
@@ -383,6 +494,7 @@ F3:: {
     Radio1.Value := 1
     Radio2.Value := 0
     Radio3.Value := 0
+    Radio4.Value := 0
     MethodSwitch()
 }
 
@@ -391,6 +503,7 @@ F4:: {
     Radio1.Value := 0
     Radio2.Value := 1
     Radio3.Value := 0
+    Radio4.Value := 0
     MethodSwitch()
 }
 
@@ -399,31 +512,35 @@ F5:: {
     Radio1.Value := 0
     Radio2.Value := 0
     Radio3.Value := 1
+    Radio4.Value := 0
+    MethodSwitch()
+}
+
+F6:: {
+    global ActiveMethod
+    Radio1.Value := 0
+    Radio2.Value := 0
+    Radio3.Value := 0
+    Radio4.Value := 1
     MethodSwitch()
 }
 
 F7:: {
     global ActiveMethod
-    ActiveMethod := Mod(ActiveMethod, 3) + 1 ; Toggle 1-3
-
+    ActiveMethod := Mod(ActiveMethod, 4) + 1
     Radio1.Value := (ActiveMethod = 1)
     Radio2.Value := (ActiveMethod = 2)
     Radio3.Value := (ActiveMethod = 3)
-
-    StatusText.Value := "Method " ActiveMethod " activated (Toggle)"
+    Radio4.Value := (ActiveMethod = 4)
+    StatusText.Value := "Method " ActiveMethod " activated"
     MethodText.Value := "Active Method: " ActiveMethod
 }
 
-;===========================================
-; EXIT / STOP
-;===========================================
 F2:: {
     global IsRunning, RunCount, StartTime
-
     IsRunning := false
     RunCount := 0
     StartTime := 0
-
     StatusText.Value := "Macro reloaded!"
     Reload()
 }
