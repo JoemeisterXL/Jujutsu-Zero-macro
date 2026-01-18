@@ -6,67 +6,22 @@
 
 The macro is designed to work on **any raid difficulty**, provided your stats are high enough to finish the fight instantly.
 
-* **Raid Tiers:** Works on all stages (Easy, Medium, Hard, etc.) **as long as you can One-Tap the boss.**
+* **Raid Tiers:** Works on all stages (Easy, Medium, Hard, etc.)
 * **Characters:** You can use **All special grades**.
-* **Skill:** Your **Final Attack** must be unlocked.
-* **Slot:** The character **MUST** be placed in the **1st slot**.
-* **Power:** If the boss survives the first hit, the macro loop will break.
+* **Slot:** The character **MUST** be placed in the **1st slot and 2st slot**.
 * **Display:** Use **Full Screen** mode for the best results.
-* **Pov:** Use **80 pov** otherwise you wont hit the boss!(You can change this ingame).
+* **Pov:** Use **80 pov** (You can change this ingame).
 
 ---
 
 ## 🚀 How to Use
 
-1.  **Run:** Launch the `raid.exe` .
+1.  **Run:** Launch the `...raid.exe` .
 2.  * <img width="126" height="130" alt="image" src="https://github.com/user-attachments/assets/c0f1f88b-5ecf-4222-804a-e29ed18de560" />
 3.  **Enter Raid:** Join any Jogo Raid (any difficulty).
 4.  **Controls:**
     * Press **`F1`** to **Start** the automation.
-    * Press **`F2`** to **Stop** and exit the program completely.
-   
-If you use physical heavently restriction
-
--Use methode 3 on toji raids
-
--middle mouse button
-
--press E (long dash)
-
--press E (long dash)
-
--press number 1 (Festering Life Sword)
-
--press R (Festering Life Sword ability)
-
--press number 2 (Inverted Spear of Heaven)
-
--press R (Inverted Spear of Heaven ability)
-
--The same as the other scripts (next button and retry)
-
--U need to have maxed the two swords to max damage
-
----
-
-## 💡 Build Optimization Tips
-
-Since the macro relies on a **One-Tap** kill, focus on these stats to ensure it works on higher difficulties:
-
-* **Stats:** Max out **Offense** and **Sorcery** to boost your **Crit Damage**.
-* **Gear:** Obtain the **Dragon Bone** to significantly increase your **Crit Chance**.
-    * [View Dragon Bone Info on Trello](https://trello.com/c/Henxfu9C/45-dragon-bone)
-    * My build
-    * <img width="378" height="237" alt="image" src="https://github.com/user-attachments/assets/3baf7b0c-c6d6-4450-bc6c-885a05bba8d0" />
-    
-    * My Skill tree
-    * <img width="363" height="324" alt="image" src="https://github.com/user-attachments/assets/f09f04b2-9a46-4e5f-af56-5dcf20acdcb9" />
-    * <img width="364" height="313" alt="image" src="https://github.com/user-attachments/assets/0b24f7e9-5bf2-4657-986f-6542badb020f" />
-
-
-
-  
-
+    * Press **`F2`** to **Stop** and exit the program.
 
 ---
 
