@@ -52,18 +52,18 @@ MainGui.SetFont("s10 norm cWhite")
 ;--- Method Selection Group ---
 MainGui.Add("GroupBox", "x20 y160 w300 h330", "Method Selection")
 
-; --- Method 2 ---
+; --- Method Radios (Grouped together) ---
 Radio2 := MainGui.Add("Radio", "x40 y185 w260 vMethodRadio2 Checked", "Method 2: Keybind R | Slot 1 (Fast)")
+Radio3 := MainGui.Add("Radio", "x40 y240 w260 vMethodRadio3", "Method 3: Slot 1+2 (No Ult)")
+Radio4 := MainGui.Add("Radio", "x40 y295 w260 vMethodRadio4", "Method 4: Slot 1+2 + Ult")
+
+; --- Info Buttons ---
 InfoBtn2 := MainGui.Add("Button", "x55 y208 w80 h22", "Info")
 InfoBtn2.SetFont("s8")
 
-; --- Method 3 ---
-Radio3 := MainGui.Add("Radio", "x40 y240 w260 vMethodRadio3", "Method 3: Slot 1+2 (No Ult)")
 InfoBtn3 := MainGui.Add("Button", "x55 y263 w80 h22", "Info")
 InfoBtn3.SetFont("s8")
 
-; --- Method 4 ---
-Radio4 := MainGui.Add("Radio", "x40 y295 w260 vMethodRadio4", "Method 4: Slot 1+2 + Ult")
 InfoBtn4 := MainGui.Add("Button", "x55 y318 w80 h22", "Info")
 InfoBtn4.SetFont("s8")
 
@@ -126,33 +126,30 @@ SetTimer(UpdateTimer, 1000)
 ; INFO POPUP FUNCTIONS (ALWAYS ON TOP)
 ;===========================================
 ShowInfo2(*) {
-    ; 4096 = System Modal (Always On Top)
     MsgBox("METHOD 2 DETAILS:`n`n"
-         . "- Speed: Fast`n"
-         . "- Moves: Uses only Slot 1.`n"
-         . "- Keybinds: Uses 'R', 'F'and 'X'.`n"
-         . "- Ultimate: NO Ultimate used.`n`n"
-         . "Recommended for: Fast farming where Ultimate is not needed.", "Method 2 Info", 4096)
+    . "- Speed: Fast`n"
+    . "- Moves: Uses only Slot 1.`n"
+    . "- Keybinds: Uses 'R', 'F'and 'X'.`n"
+    . "- Ultimate: NO Ultimate used.`n`n"
+    . "Recommended for: Fast farming where Ultimate is not needed.", "Method 2 Info", 4096)
 }
 
 ShowInfo3(*) {
-    ; 4096 = System Modal (Always On Top)
     MsgBox("METHOD 3 DETAILS:`n`n"
-         . "- Speed: Medium`n"
-         . "- Moves: Switches between Slot 1 AND Slot 2.`n"
-         . "- Keybinds: Uses 'X', 'R' and 'F' for both slots.`n"
-         . "- Ultimate: NO Ultimate used.`n`n"
-         . "Recommended for: Maximizing normal damage without using Ult.", "Method 3 Info", 4096)
+    . "- Speed: Medium`n"
+    . "- Moves: Switches between Slot 1 AND Slot 2.`n"
+    . "- Keybinds: Uses 'X', 'R' and 'F' for both slots.`n"
+    . "- Ultimate: NO Ultimate used.`n`n"
+    . "Recommended for: Maximizing normal damage without using Ult.", "Method 3 Info", 4096)
 }
 
 ShowInfo4(*) {
-    ; 4096 = System Modal (Always On Top)
     MsgBox("METHOD 4 DETAILS:`n`n"
-         . "- Speed: Slow / Full Rotation`n"
-         . "- Moves: Switches between Slot 1 AND Slot 2.`n"
-         . "- Keybinds: Uses 'X', 'R', 'F', and Ultimate ('C').`n"
-         . "- Ultimate: YES, uses Ultimate (C) with animation wait.`n`n"
-         . "Recommended for: Bosses or hard raids.", "Method 4 Info", 4096)
+    . "- Speed: Slow / Full Rotation`n"
+    . "- Moves: Switches between Slot 1 AND Slot 2.`n"
+    . "- Keybinds: Uses 'X', 'R', 'F', and Ultimate ('C').`n"
+    . "- Ultimate: YES, uses Ultimate (C) with animation wait.`n`n"
+    . "Recommended for: Bosses or hard raids.", "Method 4 Info", 4096)
 }
 
 ;===========================================
@@ -181,23 +178,34 @@ DomainToggle(*) {
 }
 
 ;===========================================
-; HELPER FUNCTION - CAST DOMAIN
+; HELPER FUNCTIONS - MOUSE & ATTACKS
 ;===========================================
+
+; --- RESET MOUSE TO CENTER & CLICK GAME ---
+ResetMouseToCenter() {
+    CenterX := A_ScreenWidth // 2
+    CenterY := A_ScreenHeight // 2
+    MouseMove(CenterX, CenterY, 0)
+    Sleep(50)
+    Click() ; Click to ensure game is focused
+    Sleep(50)
+}
+
 CastDomain() {
     global UseDomain
     if (UseDomain) {
         ToolTip("Casting Domain (T)...")
         Send("t")
-        Sleep(1200) ; Wait time for animation
+        Sleep(1200) 
         ToolTip()
     }
 }
 
-;===========================================
-; HELPER FUNCTION - ROTATE AND SCAN (Q x2)
-;===========================================
 RotateAndScan() {
     ToolTip("Scanning Area (Rotate & Q)...")
+
+    ; Mouse reset happens in Main Loop NOW
+
     Loop 4 {
         Send("q")
         Sleep(550)
@@ -205,7 +213,7 @@ RotateAndScan() {
         Sleep(550)
         Send("q")
         Sleep(550)
-        
+
         Click("Right Down")
         Sleep(50)
         DllCall("mouse_event", "UInt", 0x0001, "Int", 250, "Int", 0, "UInt", 0, "UPtr", 0)
@@ -216,9 +224,6 @@ RotateAndScan() {
     ToolTip()
 }
 
-;===========================================
-; HELPER FUNCTION - CHECK FOR RETRY BUTTON
-;===========================================
 CheckForRetry() {
     global RunCount, RunCountText
 
@@ -250,11 +255,16 @@ CheckForRetry() {
 ; MAIN LOOP - F1 TO START
 ;===========================================
 F1:: {
-    global ActiveMethod, StartTime, IsRunning
+    global ActiveMethod, StartTime, IsRunning, MainGui
 
     if (!IsRunning) {
         StartTime := A_TickCount
         IsRunning := true
+
+        ; === FIX: HIDE GUI SO WE DON'T CLICK IT ===
+        MainGui.Hide()
+        Sleep(200)
+        ; ==========================================
     }
 
     StatusText.Value := "Macro running... (Method " ActiveMethod ")"
@@ -271,6 +281,10 @@ F1:: {
         StatusText.Value := "Start found - Running..."
         ToolTip("Start found - Running...")
 
+        ; === ENSURE GAME FOCUS ===
+        ResetMouseToCenter()
+        ; =========================
+
         RotateAndScan()
 
         ; === ATTACK SEQUENCE ===
@@ -280,7 +294,7 @@ F1:: {
             Loop {
                 ToolTip("Method 2 - Attack Cycle " A_Index)
                 Sleep(1000)
-                
+
                 CastDomain()
 
                 Send("1")
@@ -474,12 +488,20 @@ F7:: {
 }
 
 F2:: {
-    global IsRunning, RunCount, StartTime
+    global IsRunning, RunCount, StartTime, MainGui
     IsRunning := false
     RunCount := 0
     StartTime := 0
-    StatusText.Value := "Macro reloaded!"
+    StatusText.Value := "Macro stopped!"
+
+    ; === SHOW GUI AGAIN ===
+    MainGui.Show()
+    ; ======================
+
     Reload()
 }
 
-ESC:: ExitApp()
+ESC:: {
+    MainGui.Show()
+    ExitApp()
+}
