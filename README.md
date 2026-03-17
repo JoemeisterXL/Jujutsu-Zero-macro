@@ -16,7 +16,7 @@ The macro is designed to work on **any raid difficulty**, provided your stats ar
 
 ## 🚀 How to Use
 
-1.  **Run:** Launch the `...AllRaid.exe` .
+1.  **Run:** Launch the `...AllRaids.exe` .
 2.  **You can do EveryRaid with it**
     * Press **`F1`** to **Start** the automation.
     * Press **`F2`** to **Stop** and exit the program.
