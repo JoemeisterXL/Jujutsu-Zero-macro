@@ -191,9 +191,9 @@ ShowGuide(*) {
     guideText .= "   to onetap the boss you need the right placement (use the ? button to see the positions).`n"
     guideText .= "6. If you are in the Boss fight you can click F1 to start.`n"
     guideText .= "   Audio Threshold is not used right now just ignore it.`n"
-    guideText .= "7. If you click F2 you can stop the macro and reload it."
-    guideText .= "Info: dont go into the Fullscreen mode, turn it off!"
-
+    guideText .= "7. If you click F2 you can stop the macro and reload it.`n"
+    guideText .= "Info: dont go into the Fullscreen mode, turn it off!`n"
+    guideText .= "Info: Activate Target Lock on with m3 one time`n"
     MsgBox(guideText, "Info / Guide", 64)
 }
 
